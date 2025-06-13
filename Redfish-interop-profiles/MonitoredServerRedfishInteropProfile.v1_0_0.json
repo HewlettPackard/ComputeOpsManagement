@@ -1,0 +1,874 @@
+{
+  "SchemaDefinition": "RedfishInteroperabilityProfile.v1_3_0",
+  "ProfileName": "MonitoredServerRedfishInteropProfile",
+  "ProfileVersion": "1.0.0",
+  "OwningEntity": "HPE",
+  "ContactInfo": "support@hpe.com",
+  "Protocol": {
+    "MinVersion": "1.6",
+    "ExpandQuery": "Recommended"
+  },
+  "Resources": {
+    "ServiceRoot": {
+      "PropertyRequirements": {
+        "Chassis": {
+          "ReadRequirement": "Mandatory"
+        },
+        "EventService": {
+          "ReadRequirement": "Mandatory"
+        },
+        "JsonSchemas": {
+          "ReadRequirement": "Recommended"
+        },
+        "Links": {
+          "ReadRequirement": "Mandatory",
+          "PropertyRequirements": {
+            "Sessions": {
+              "ReadRequirement": "Mandatory"
+            }
+          }
+        },
+        "Managers": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Registries": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Systems": {
+          "ReadRequirement": "Mandatory"
+        },
+        "UpdateService": {
+          "ReadRequirement": "Recommended"
+        },
+        "Vendor": {
+          "ReadRequirement": "Mandatory"
+        }
+      }
+    },
+    "ChassisCollection": {
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 1
+        }
+      }
+    },
+    "Chassis": {
+      "MinVersion": "1.11.0",
+      "PropertyRequirements": {
+        "ChassisType": {
+          "ReadRequirement": "Recommended"
+        },
+        "HeightMm": {
+          "ReadRequirement": "Recommended"
+        },
+        "NetworkAdapters": {
+          "ReadRequirement": "Recommended"
+        },
+        "PCIeDevices": {
+          "ReadRequirement": "Recommended"
+        },
+        "Power": {
+          "ReadRequirement": "Recommended"
+        },
+        "Thermal": {
+          "ReadRequirement": "Recommended"
+        }
+      }
+    },
+    "ComputerSystemCollection": {
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 1
+        }
+      }
+    },
+    "ComputerSystem": {
+      "MinVersion": "1.13.0",
+      "PropertyRequirements": {
+        "BiosVersion": {
+          "ReadRequirement": "Recommended"
+        },
+        "Boot": {
+          "ReadRequirement": "Mandatory",
+          "PropertyRequirements": {
+            "BootSourceOverrideEnabled": {
+              "ReadRequirement": "Mandatory",
+              "WriteRequirement": "Mandatory"
+            },
+            "BootSourceOverrideTarget": {
+              "ReadRequirement": "Mandatory",
+              "WriteRequirement": "Mandatory",
+              "MinSupportValues": [
+                "BiosSetup"
+              ]
+            }
+          }
+        },
+        "BootProgress": {
+          "ReadRequirement": "Mandatory",
+          "PropertyRequirements": {
+            "LastState": {
+              "ReadRequirement": "Mandatory"
+            }
+          }
+        },
+        "HostName": {
+          "ReadRequirement": "Recommended"
+        },
+        "IndicatorLED": {
+          "ReadRequirement": "Recommended",
+          "WriteRequirement": "Recommended"
+        },
+        "Manufacturer": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Memory": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Model": {
+          "ReadRequirement": "Mandatory"
+        },
+        "PartNumber": {
+          "ReadRequirement": "IfImplemented",
+          "ConditionalRequirements": [
+            {
+              "Purpose": "Either PartNumber or SKU must be supported.",
+              "CompareProperty": "SKU",
+              "CompareType": "Absent",
+              "ReadRequirement": "Mandatory"
+            }
+          ]
+        },
+        "PowerState": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Processors": {
+          "ReadRequirement": "Mandatory"
+        },
+        "ProcessorSummary": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Model": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        },
+        "SerialNumber": {
+          "ReadRequirement": "Mandatory"
+        },
+        "SKU": {
+          "ReadRequirement": "IfImplemented",
+          "ConditionalRequirements": [
+            {
+              "Purpose": "Either PartNumber or SKU must be supported.",
+              "CompareProperty": "PartNumber",
+              "CompareType": "Absent",
+              "ReadRequirement": "Mandatory"
+            }
+          ]
+        },
+        "Status": {
+          "ReadRequirement": "Mandatory",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Mandatory"
+            }
+          }
+        },
+        "UUID": {
+          "ReadRequirement": "Mandatory"
+        }
+      },
+      "ActionRequirements": {
+        "Reset": {
+          "ReadRequirement": "Mandatory",
+          "Parameters": {
+            "ResetType": {
+              "ReadRequirement": "Mandatory",
+              "ParameterValues": [
+                "ForceOff",
+                "GracefulShutdown",
+                "On"
+              ],
+              "RecommendedValues": [
+                "ForceRestart",
+                "PowerCycle"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "EthernetInterface": {
+      "MinVersion": "1.2.0",
+      "ReadRequirement": "Recommended",
+      "ConditionalRequirements": [
+        {
+          "SubordinateToResource": [
+            "Manager",
+            "EthernetInterfaceCollection"
+          ],
+          "ReadRequirement": "Mandatory"
+        }
+      ],
+      "PropertyRequirements": {
+        "FQDN": {
+          "ReadRequirement": "Recommended"
+        },
+        "HostName": {
+          "ReadRequirement": "Recommended"
+        },
+        "InterfaceEnabled": {
+          "ReadRequirement": "Mandatory"
+        },
+        "IPv4Addresses": {
+          "ReadRequirement": "Recommended",
+          "ConditionalRequirements": [
+            {
+              "SubordinateToResource": [
+                "Manager",
+                "EthernetInterfaceCollection"
+              ],
+              "ReadRequirement": "Mandatory",
+              "MinCount": 1
+            }
+          ],
+          "PropertyRequirements": {
+            "Address": {
+              "ReadRequirement": "Mandatory"
+            }
+          }
+        },
+        "MACAddress": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "EventService": {
+      "MinVersion": "1.3.1",
+      "PropertyRequirements": {
+        "EventTypesForSubscription": {
+          "ReadRequirement": "IfImplemented",
+          "ConditionalRequirements": [
+            {
+              "Purpose": "Either EventTypesForSubscription or RegistryPrefixes must be supported.",
+              "CompareProperty": "RegistryPrefixes",
+              "CompareType": "Absent",
+              "ReadRequirement": "Mandatory"
+            }
+          ]
+        },
+        "RegistryPrefixes": {
+          "ReadRequirement": "IfImplemented",
+          "ConditionalRequirements": [
+            {
+              "Purpose": "Either EventTypesForSubscription or RegistryPrefixes must be supported.",
+              "CompareProperty": "EventTypesForSubscription",
+              "CompareType": "Absent",
+              "ReadRequirement": "Mandatory"
+            }
+          ]
+        }
+      },
+      "Subscriptions": {
+        "ReadRequirement": "Mandatory"
+      }
+    },
+    "EventDestinationCollection": {
+      "CreateResource": true,
+      "DeleteResource": true,
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "EventDestination": {
+      "MinVersion": "1.3.1",
+      "Context": {
+        "ReadRequirement": "Mandatory",
+        "WriteRequirement": "Mandatory"
+      },
+      "Destination": {
+        "ReadRequirement": "Mandatory",
+        "WriteRequirement": "Mandatory"
+      },
+      "EventTypes": {
+        "ReadRequirement": "IfImplemented",
+        "WriteRequirement": "IfImplemented",
+        "ConditionalRequirements": [
+          {
+            "Purpose": "Either EventTypes or RegistryPrefixes must be supported.",
+            "CompareProperty": "RegistryPrefixes",
+            "CompareType": "Absent",
+            "ReadRequirement": "Mandatory",
+            "WriteRequirement": "Mandatory"
+          }
+        ]
+      },
+      "HttpHeaders": {
+        "ReadRequirement": "Recommended",
+        "WriteRequirement": "IfImplemented"
+      },
+      "RegistryPrefixes": {
+        "ReadRequirement": "IfImplemented",
+        "WriteRequirement": "IfImplemented",
+        "ConditionalRequirements": [
+          {
+            "Purpose": "Either EventTypes or RegistryPrefixes must be supported.",
+            "CompareProperty": "EventTypes",
+            "CompareType": "Absent",
+            "ReadRequirement": "Mandatory",
+            "WriteRequirement": "Mandatory"
+          }
+        ]
+      },
+      "Protocol": {
+        "ReadRequirement": "Mandatory",
+        "WriteRequirement": "Mandatory"
+      }
+    },
+    "ManagerCollection": {
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 1
+        }
+      }
+    },
+    "Manager": {
+      "MinVersion": "1.5.0",
+      "PropertyRequirements": {
+        "EthernetInterfaces": {
+          "ReadRequirement": "Mandatory"
+        },
+        "FirmwareVersion": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Model": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Status": {
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "MemoryCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "Memory": {
+      "MinVersion": "1.7.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "BaseModuleType": {
+          "ReadRequirement": "Mandatory"
+        },
+        "CapacityMiB": {
+          "ReadRequirement": "Mandatory"
+        },
+        "DeviceLocator": {
+          "ReadRequirement": "Mandatory"
+        },
+        "MemoryDeviceType": {
+          "ReadRequirement": "Recommended"
+        },
+        "OperatingSpeedMhz": {
+          "ReadRequirement": "Recommended"
+        },
+        "PartNumber": {
+          "ReadRequirement": "Recommended"
+        },
+        "SerialNumber": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "NetworkAdapterCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "NetworkAdapter": {
+      "MinVersion": "1.5.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Controllers": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Location": {
+              "ReadRequirement": "Recommended",
+              "PropertyRequirements": {
+                "PartLocation": {
+                  "ReadRequirement": "Recommended",
+                  "PropertyRequirements": {
+                    "LocationOrdinalValue": {
+                      "ReadRequirement": "Recommended"
+                    },
+                    "LocationType": {
+                      "ReadRequirement": "Recommended"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Model": {
+          "ReadRequirement": "Recommended"
+        },
+        "NetworkDeviceFunctions": {
+          "ReadRequirement": "Recommended"
+        },
+        "Ports": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "NetworkDeviceFunctionCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "NetworkDeviceFunction": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "FibreChannel": {
+          "ReadRequirement": "IfImplemented",
+          "PropertyRequirements": {
+            "WWNN": {
+              "ReadRequirement": "Recommended"
+            },
+            "WWPN": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "PortCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "Port": {
+      "MinVersion": "1.5.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Ethernet": {
+          "ReadRequirement": "IfImplemented",
+          "PropertyRequirements": {
+            "AssociatedMACAddresses": {
+              "MinCount": 1
+            }
+          }
+        },
+        "PortId": {
+          "ReadRequirement": "Recommended"
+        }
+      }
+    },
+    "PCIeDeviceCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "PCIeDevice": {
+      "MinVersion": "1.4.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "FirmwareVersion": {
+          "ReadRequirement": "Recommended"
+        },
+        "Name": {
+          "ReadRequirement": "Recommended"
+        },
+        "PartNumber": {
+          "ReadRequirement": "Recommended"
+        },
+        "SerialNumber": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "Power": {
+      "MinVersion": "1.3.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "PowerSupplies": {
+          "ReadRequirement": "Recommended"
+        }
+      }
+    },
+    "PowerSupplyCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "PowerSupply": {
+      "MinVersion": "1.3.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "FirmwareVersion": {
+          "ReadRequirement": "Recommended"
+        },
+        "Model": {
+          "ReadRequirement": "Recommended"
+        },
+        "PowerCapacityWatt": {
+          "ReadRequirement": "Recommended"
+        },
+        "SerialNumber": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "ProcessorCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "Processor": {
+      "MinVersion": "1.7.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "MaxSpeedMHz": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Model": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        },
+        "TotalCores": {
+          "ReadRequirement": "Recommended"
+        },
+        "TotalThreads": {
+          "ReadRequirement": "Recommended"
+        }
+      }
+    },
+    "UpdateService": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "FirmwareInventory": {
+          "ReadRequirement": "Recommended"
+        },
+        "SoftwareInventory": {
+          "ReadRequirement": "Recommended"
+        }
+      }
+    },
+    "SoftwareInventoryCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "SoftwareInventory": {
+      "MinVersion": "1.2.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Name": {
+          "ReadRequirement": "Mandatory"
+        },
+        "Version": {
+          "ReadRequirement": "Mandatory"
+        }
+      }
+    },
+    "Thermal": {
+      "MinVersion": "1.6.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Fans": {
+          "ReadRequirement": "Recommended",
+          "MinCount": 0
+        }
+      }
+    },
+    "Fan": {
+      "MinVersion": "1.1.0",
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Name": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "StorageCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "Storage": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Controllers": {
+          "ReadRequirement": "Recommended"
+        },
+        "Drives": {
+          "ReadRequirement": "Recommended"
+        },
+        "Volumes": {
+          "ReadRequirement": "Recommended"
+        }
+      }
+    },
+    "StorageControllerCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "StorageController": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Location": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "PartLocation": {
+              "ReadRequirement": "Recommended",
+              "PropertyRequirements": {
+                "ServiceLabel": {
+                  "ReadRequirement": "Recommended"
+                }
+              }
+            }
+          }
+        },
+        "Model": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "DriveCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "Drive": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "CapacityBytes": {
+          "ReadRequirement": "Recommended"
+        },
+        "MediaType": {
+          "ReadRequirement": "Recommended"
+        },
+        "Model": {
+          "ReadRequirement": "Recommended"
+        },
+        "PhysicalLocation": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "PartLocation": {
+              "ReadRequirement": "Recommended",
+              "PropertyRequirements": {
+                "ServiceLabel": {
+                  "ReadRequirement": "Recommended"
+                }
+              }
+            }
+          }
+        },
+        "PredictedMediaLifeLeftPercent": {
+          "ReadRequirement": "Recommended"
+        },
+        "Protocol": {
+          "ReadRequirement": "Recommended"
+        },
+        "Revision": {
+          "ReadRequirement": "Recommended"
+        },
+        "SerialNumber": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        }
+      }
+    },
+    "VolumeCollection": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "Members": {
+          "MinCount": 0
+        }
+      }
+    },
+    "Volume": {
+      "ReadRequirement": "IfImplemented",
+      "PropertyRequirements": {
+        "CapacityBytes": {
+          "ReadRequirement": "Recommended"
+        },
+        "DisplayName": {
+          "ReadRequirement": "Recommended"
+        },
+        "IOPerfModeEnabled": {
+          "ReadRequirement": "Recommended"
+        },
+        "Links": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Drives": {
+              "ReadRequirement": "Recommended"
+            },
+            "DedicatedSpareDrives": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        },
+        "RAIDType": {
+          "ReadRequirement": "Mandatory"
+        },
+        "ReadCachePolicy": {
+          "ReadRequirement": "Recommended"
+        },
+        "Status": {
+          "ReadRequirement": "Recommended",
+          "PropertyRequirements": {
+            "Health": {
+              "ReadRequirement": "Recommended"
+            },
+            "State": {
+              "ReadRequirement": "Recommended"
+            }
+          }
+        },
+        "WriteCachePolicy": {
+          "ReadRequirement": "Recommended"
+        }
+      }
+    }
+  }
+}
