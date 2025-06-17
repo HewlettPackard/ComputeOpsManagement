@@ -1,7 +1,7 @@
 {
   "SchemaDefinition": "RedfishInteroperabilityProfile.v1_3_0",
   "ProfileName": "MonitoredServerRedfishInteropProfile",
-  "ProfileVersion": "1.0.0",
+  "ProfileVersion": "1.0.1",
   "OwningEntity": "HPE",
   "ContactInfo": "support@hpe.com",
   "Protocol": {
@@ -105,7 +105,7 @@
           }
         },
         "BootProgress": {
-          "ReadRequirement": "Mandatory",
+          "ReadRequirement": "IfImplemented",
           "PropertyRequirements": {
             "LastState": {
               "ReadRequirement": "Mandatory"
@@ -126,7 +126,7 @@
           "ReadRequirement": "Mandatory"
         },
         "Model": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "PartNumber": {
           "ReadRequirement": "IfImplemented",
@@ -143,7 +143,7 @@
           "ReadRequirement": "Mandatory"
         },
         "Processors": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "ProcessorSummary": {
           "ReadRequirement": "Recommended",
@@ -296,6 +296,7 @@
     },
     "EventDestination": {
       "MinVersion": "1.3.1",
+      "ReadRequirement": "IfImplemented",
       "Context": {
         "ReadRequirement": "Mandatory",
         "WriteRequirement": "Mandatory"
@@ -353,10 +354,10 @@
           "ReadRequirement": "Mandatory"
         },
         "FirmwareVersion": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "Model": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "Status": {
           "PropertyRequirements": {
@@ -380,13 +381,13 @@
       "ReadRequirement": "IfImplemented",
       "PropertyRequirements": {
         "BaseModuleType": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "CapacityMiB": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "DeviceLocator": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "MemoryDeviceType": {
           "ReadRequirement": "Recommended"
@@ -580,7 +581,7 @@
         "Model": {
           "ReadRequirement": "Recommended"
         },
-        "PowerCapacityWatt": {
+        "PowerCapacityWatts": {
           "ReadRequirement": "Recommended"
         },
         "SerialNumber": {
@@ -612,10 +613,10 @@
       "ReadRequirement": "IfImplemented",
       "PropertyRequirements": {
         "MaxSpeedMHz": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "Model": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "Status": {
           "ReadRequirement": "Recommended",
@@ -660,10 +661,10 @@
       "ReadRequirement": "IfImplemented",
       "PropertyRequirements": {
         "Name": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "Version": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         }
       }
     },
@@ -849,7 +850,7 @@
           }
         },
         "RAIDType": {
-          "ReadRequirement": "Mandatory"
+          "ReadRequirement": "Recommended"
         },
         "ReadCachePolicy": {
           "ReadRequirement": "Recommended"
